@@ -15,9 +15,8 @@ public class Role {
     @Column(name = "name", nullable = false, length = 50)
     private String name;
 
-    public Role(Long id) {
-        super();
-        this.id = id;
+    public Role(String name) {
+        this.name = name;
     }
 
     public String getName() {

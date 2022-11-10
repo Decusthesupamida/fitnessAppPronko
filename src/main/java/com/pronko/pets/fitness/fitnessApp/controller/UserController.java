@@ -5,6 +5,8 @@ import com.pronko.pets.fitness.fitnessApp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.security.RolesAllowed;
 import java.net.URI;
 
 import java.util.List;
@@ -17,6 +19,7 @@ public class UserController {
     private UserRepository userRepository;
 
     @GetMapping
+    @RolesAllowed("ROLE_ADMIN")
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }

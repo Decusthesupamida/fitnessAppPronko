@@ -25,10 +25,10 @@ class UserRepositoryTest {
     @SneakyThrows
     public void testCreateUser() {
         User user = new User();
-        user.setFirstname("testprikol");
-        user.setUsername("tests@mail.com");
+        user.setFirstname("john");
+        user.setUsername("john@mail.com");
         user.setLastname("testlast");
-        String password = new BCryptPasswordEncoder().encode("test1234");
+        String password = new BCryptPasswordEncoder().encode("john1234");
         user.setPassword(password);
 
         User savedUser = userRepository.save(user);

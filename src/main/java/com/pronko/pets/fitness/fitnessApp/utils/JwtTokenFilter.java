@@ -1,6 +1,8 @@
 package com.pronko.pets.fitness.fitnessApp.utils;
 
+import com.pronko.pets.fitness.fitnessApp.entity.Role;
 import com.pronko.pets.fitness.fitnessApp.entity.User;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -62,7 +64,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         UserDetails userDetails = getUserDetails(token);
 
         UsernamePasswordAuthenticationToken
-                authentication = new UsernamePasswordAuthenticationToken(userDetails, null, null);
+                authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
         authentication.setDetails(
                 new WebAuthenticationDetailsSource().buildDetails(request));
@@ -72,6 +74,19 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
     private UserDetails getUserDetails(String token) {
         User userDetails = new User();
+        Claims claims = jwtUtil.parseClaims(token);
+
+        String claimsRoles = (String) claims.get("roles");
+
+        claimsRoles = claimsRoles.replace("[", "").replace("]", "");
+        String[] roleNames = claimsRoles.split(",");
+
+        for (String role : roleNames) {
+            userDetails.addRole(new Role(role));
+        }
+
+        String subject = (String) claims.get(Claims.SUBJECT);
+        String[] subjectArr = subject.split(",");
         String[] jwtSubject = jwtUtil.getSubject(token).split(",");
 
         userDetails.setId(Long.parseLong(jwtSubject[0]));
