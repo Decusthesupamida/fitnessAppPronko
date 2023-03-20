@@ -1,0 +1,30 @@
+databaseChangeLog:
+  - changeSet:
+      id: add_default_roles_13032023-3
+      author: PPronko
+      changes:
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: name
+                  value: USER
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: name
+                  value: ADMIN
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: name
+                  value: TRAINER
+
+
+
+
+
+
+

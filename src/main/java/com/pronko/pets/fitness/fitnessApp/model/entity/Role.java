@@ -1,11 +1,15 @@
-package com.pronko.pets.fitness.fitnessApp.entity;
+package com.pronko.pets.fitness.fitnessApp.model.entity;
 
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
+@Getter
+@Setter
+@AllArgsConstructor
+@Builder
 @Table(name = "roles")
 public class Role {
     @Column(name = "id", nullable = false)
@@ -17,21 +21,5 @@ public class Role {
 
     public Role(String name) {
         this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 }

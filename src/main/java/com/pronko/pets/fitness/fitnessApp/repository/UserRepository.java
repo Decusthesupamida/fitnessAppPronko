@@ -1,6 +1,6 @@
 package com.pronko.pets.fitness.fitnessApp.repository;
 
-import com.pronko.pets.fitness.fitnessApp.entity.User;
+import com.pronko.pets.fitness.fitnessApp.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

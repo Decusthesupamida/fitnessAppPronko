@@ -1,8 +1,8 @@
 package com.pronko.pets.fitness.fitnessApp.repository;
 
 import com.github.dockerjava.api.exception.NotFoundException;
-import com.pronko.pets.fitness.fitnessApp.entity.Role;
-import com.pronko.pets.fitness.fitnessApp.entity.User;
+import com.pronko.pets.fitness.fitnessApp.model.entity.Role;
+import com.pronko.pets.fitness.fitnessApp.model.entity.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;

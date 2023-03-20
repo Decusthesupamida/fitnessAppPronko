@@ -1,0 +1,71 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_trainers_09032023-1
+      author: PPronko
+      changes:
+        - createTable:
+            tableName: trainers
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    referencedTableName: users
+                    referencedColumnNames: id
+                    foreignKeyName: fk_user_id_trainer
+              - column:
+                  name: start_work_at
+                  type: date
+              - column:
+                  name: amount_workouts
+                  type: int
+                  defaultValue: '0'
+              - column:
+                  name: active_trainer
+                  type: boolean
+                  defaultValueBoolean: false
+              - column:
+                  name: amount_active_clients
+                  type: int
+                  defaultValue: '0'
+      rollback:
+        - dropTable:
+            tableName: trainers
+  - changeSet:
+      id: add_columns_users_09032023-2
+      author: PPronko
+      changes:
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: create_at
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: active
+                  type: boolean
+                  defaultValueBoolean: true
+
+      rollback:
+        - dropColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: create_at
+              - column:
+                  name: active
+
+
+
+
+
+

@@ -1,6 +1,6 @@
 package com.pronko.pets.fitness.fitnessApp.utils;
 
-import com.pronko.pets.fitness.fitnessApp.entity.User;
+import com.pronko.pets.fitness.fitnessApp.model.entity.User;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,7 +1,7 @@
 package com.pronko.pets.fitness.fitnessApp.utils;
 
-import com.pronko.pets.fitness.fitnessApp.entity.Role;
-import com.pronko.pets.fitness.fitnessApp.entity.User;
+import com.pronko.pets.fitness.fitnessApp.model.entity.Role;
+import com.pronko.pets.fitness.fitnessApp.model.entity.User;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -11,7 +11,6 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
-import org.springframework.web.util.ServletContextPropertyUtils;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -47,17 +46,12 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
     private boolean hasAuthorizationBearer(HttpServletRequest request) {
         String header = request.getHeader("Authorization");
-        if (ObjectUtils.isEmpty(header) || !header.startsWith("Bearer")) {
-            return false;
-        }
-
-        return true;
+        return !ObjectUtils.isEmpty(header) && header.startsWith("Bearer");
     }
 
     private String getAccessToken(HttpServletRequest request) {
         String header = request.getHeader("Authorization");
-        String token = header.split(" ")[1].trim();
-        return token;
+        return header.split(" ")[1].trim();
     }
 
     private void setAuthenticationContext(String token, HttpServletRequest request) {
@@ -91,6 +85,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
         userDetails.setId(Long.parseLong(jwtSubject[0]));
         userDetails.setUsername(jwtSubject[1]);
+        userDetails.setPassword(jwtSubject[2]);
 
         return userDetails;
     }

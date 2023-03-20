@@ -1,0 +1,30 @@
+databaseChangeLog:
+  - changeSet:
+      id: add_columns_users_10032023-1
+      author: PPronko
+      changes:
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: gender
+                  type: varchar(10)
+                  defaultValue: 'MALE'
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: birthdate
+                  type: date
+                  defaultValueComputed: CURRENT_DATE
+                  constraints:
+                    nullable: false
+
+      rollback:
+        - dropColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: gender
+              - column:
+                  name: birthdate

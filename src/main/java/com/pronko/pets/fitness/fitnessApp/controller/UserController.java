@@ -1,34 +1,46 @@
 package com.pronko.pets.fitness.fitnessApp.controller;
 
-import com.pronko.pets.fitness.fitnessApp.entity.User;
-import com.pronko.pets.fitness.fitnessApp.repository.UserRepository;
+import com.pronko.pets.fitness.fitnessApp.model.entity.User;
+import com.pronko.pets.fitness.fitnessApp.service.UserService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.RolesAllowed;
-import java.net.URI;
-
+import javax.validation.Valid;
 import java.util.List;
 
+import static com.pronko.pets.fitness.fitnessApp.controller.UserController.PATH;
+
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping(PATH)
 public class UserController {
 
+    static final String PATH = "/api/users";
+
+    private final UserService userService;
+
     @Autowired
-    private UserRepository userRepository;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping
-    @RolesAllowed("ROLE_ADMIN")
     public List<User> getAllUsers() {
-        return userRepository.findAll();
+        return userService.getAllUsers();
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        User savedUser = userRepository.save(user);
-        URI userUri = URI.create("/api/users" + savedUser.getId());
-
-        return ResponseEntity.created(userUri).body(savedUser);
+    public ResponseEntity<User> createUser(@RequestBody @Valid User user) {
+        return userService.createUser(user);
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable("id") Long id) { return userService.deleteUser(id); }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateUser(@PathVariable("id") Long id, @RequestBody @Valid User user) {
+        return userService.updateUser(id, user);
+    }
+
+
 }
